@@ -1,0 +1,92 @@
+.form {
+    border: 5px solid #EFF7CD;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 50vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-header {
+    margin: 0;
+    padding-top: 30px;
+    padding-bottom: 25px;
+    font-family: 'Gluten SemiBold';
+    color: #EFF7CD;
+    font-size: 75px;
+}
+
+.input-container {
+    padding-bottom: 25px;
+    width: 80vh;
+}
+
+.h-input-container {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 25px;
+    width:80vh;
+    justify-content: space-between;
+}
+.input-container2 {
+    display: flex;
+    flex-direction: column;
+    width: 270px;
+}
+
+.label {
+    float: left;
+    font-family: 'Gluten SemiBold';
+    font-size: 25px;
+    color: #EFF7CD;
+    text-align: left;
+    padding-bottom: 5px;
+}
+
+.input {
+    font-family: 'Gluten SemiBold';
+    font-size: 25px;
+    height: 55px;
+    background-color: #EFF7CD;
+    border-radius: 15px;
+    border: none;
+    color: #306B34;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.btn {
+    border: 4px solid #EFF7CD;
+    color: #EFF7CD;
+    background-color: #306B34;
+    border-radius: 20px;
+    font-size: 25px;
+    font-family: 'Gluten SemiBold';
+    padding: 12px 25px 12px 25px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.messages {
+}
+
+.error {
+    color: #FF6262;
+    height: 20px;
+    font-family: 'Gluten Medium';
+    font-size: 10px;
+    margin-top: -34px;
+}
+
+/* .success {
+    background-color: white;
+    color: #568EA3;
+    height: 20px;
+    font-family: 'Gluten Medium';
+    font-size: 10px;
+    margin-top: -30px;
+    width: fit-content;
+} */
