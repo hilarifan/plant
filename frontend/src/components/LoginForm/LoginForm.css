@@ -1,0 +1,25 @@
+.form {
+    border: 5px solid #EFF7CD;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 50vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* justify-content:space-evenly; */
+}
+
+.signup-link {
+    font-family: 'Gluten Medium';
+    font-size: 20;
+    color: #EFF7CD;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.link-container {
+    padding-bottom: 10px;
+    padding-top: 30px;
+}
