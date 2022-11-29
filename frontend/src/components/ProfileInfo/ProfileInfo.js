@@ -1,4 +1,4 @@
-import { useState, Image } from 'react';
+import { useState } from 'react';
 import './ProfileInfo.css';
 import validator from 'validator';
 import axios from "axios";
@@ -41,7 +41,11 @@ export default function Form() {
     };
 
     const handleImage = () => {
-        console.warn("change photo");
+        console.log("change photo");
+    }
+
+    const handleClose = () => {
+        console.log("x pressed");
     }
 
     // Handling the form submission
@@ -100,6 +104,11 @@ export default function Form() {
             <div className="form">
                 <h1 className="form-header">profile</h1>
 
+                <div className="x">
+                    {/* <button><img src={x} className="x" onClick={handleClose} /></button> */}
+                    <img src={x} />
+                </div>
+
                 <div className="messages"> {errorMessage()} {successMessage()} </div>
 
                 <form>
@@ -130,10 +139,10 @@ export default function Form() {
                         <input onChange={handleEmail} id="inputs" placeholder="email" className="input" value={email} type="email" />
                     </div>
 
-                    <button onClick={handleSubmit} className="btn" type="logout">Logout</button>
-                    {/* <div className="logout">
-                        <img source={logout} />
-                    </div> */}
+                    <div>
+                        {/* <img src={logout} className="logout"/> */}
+                        <button onClick={handleSubmit} className="btn" type="logout">Logout</button>
+                    </div>
                 </form>
             </div>
 
@@ -143,10 +152,6 @@ export default function Form() {
                 <h1 className="header">First last</h1>
                 <button onClick={handleImage} className="btn2" type="change">change photo</button>
             </div>
-
-            {/* <div className="x">
-                <Image source={x} />
-            </div> */}
         </div>
     );
 }
