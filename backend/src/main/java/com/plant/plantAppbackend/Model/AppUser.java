@@ -1,6 +1,8 @@
 package com.plant.plantAppbackend.Model;
 
 import java.util.Dictionary;
+//import com.google.gson.JsonObject;
+//import com.google.gson.JsonParser;
 import java.util.*;
 
 import java.util.List;
@@ -17,8 +19,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+//import org.json.simple.JSONObject;
+
 import com.plant.plantAppbackend.Repository.PlantRepository;
 import com.plant.plantAppbackend.Repository.UserRepository;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONString;
+
 
 /** 
  * \
@@ -34,7 +44,7 @@ import com.plant.plantAppbackend.Repository.UserRepository;
 @Entity
 @Table(name = "user_table")
 
-public class AppUser {
+public class AppUser  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long user_id; 
@@ -52,7 +62,13 @@ public class AppUser {
 
 	private String email;
 	
-	private String plantList;
+	@Column(name = "plantJSONList" , length = 2000)
+	private String plantListJson;
+//	private String philodendron;
+//	private String fern;
+//	private String aloevera;
+//	private String greenonion;
+//	public List<JSONObject> plantJsonList;
 	
 	@OneToMany(mappedBy = "id", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
 	private Set<PlantModel> plants;
@@ -63,40 +79,94 @@ public class AppUser {
 	
 	public AppUser() {
 		super();
+		this.plantListJson = "[{\"Name\":\"Philodendron\",\"Quantity\":\"0\",\"WateringFrequency\":\"10\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"AloeVera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"Fern\",\"Quantity\":\"0\",\"WateringFrequency\":\"2\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"GreenOnion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}]";
 	}
 	
 	public AppUser( String username, String firstName, String lastName, String password, String email) {
-	
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
-		this.plantList = "[\n"
-				+ "  {\n"
-				+ "    \"Name\": \"Philodendron\",\n"
-				+ "    \"Quantity\": \"0\",\n"
-				+ "    \"Watering Frequency\": \"10\"\n"
-				+ "    \"Day\": \"0\"\n"
-				+ "  },\n"
-				+ "  {\n"
-				+ "    \"Name\": \"Aloe Vera\",\n"
-				+ "    \"Quantity\": \"0\",\n"
-				+ "    \"Watering Frequency\": \"21\"\n"
-				+ "    \"Day\": \"0\"\n"
-				+ "  }\n";
+//		this.philodendron = "{\"Name\":\"Philodendron\",\"Quantity\":\"0\",\"WateringFrequency\":\"10\",\"DaysSinceWatering\":\"0\"}"; //flag
+//		this.aloevera = "{\"Name\":\"AloeVera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"}";
+//		this.fern = "{\"Name\":\"Fern\",\"Quantity\":\"0\",\"WateringFrequency\":\"2\",\"DaysSinceWatering\":\"0\"}";
+//		this.greenonion = "{\"Name\":\"GreenOnion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}";
+		this.plantListJson = "[{\"Name\":\"Philodendron\",\"Quantity\":\"0\",\"WateringFrequency\":\"10\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"AloeVera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"Fern\",\"Quantity\":\"0\",\"WateringFrequency\":\"2\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"GreenOnion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}]";
+				
 		//everyone starts with no plants --> hashMap with all types of plnats and list[1] = 0 (for numOwned of plantType)
 		//---------------NEED TO SET DEFAULT PLANT---------------------------
-		
+
 		//this.plants = plantRepository.findAll(); 
+		//JSONObject plantJson = JSON.parse(plantList);
 		
+	}
+	
+	public List<PlantModel> getPlantList() {
+		List<PlantModel> allPlants = new ArrayList<PlantModel>();
+		for (int i = 0; i < plantListJson.length(); i++) {
+			if (plantListJson.charAt(i) == '{') {
+				String plantName = "";
+				String plantQuantity = "";
+				String wateringFreq = "";
+				String daysSince = "";
+				int currChar = i+9;
+				while (plantListJson.charAt(currChar) != '"') { //first instance of name is 9 characters after the {
+					plantName += plantListJson.charAt(currChar);
+				}
+				
+				currChar = currChar + 14; //first instance of quantity is 14 characters after
+				while (plantListJson.charAt(currChar) != '"') {
+					plantQuantity += plantListJson.charAt(currChar);
+				}
+				
+				currChar = currChar + 23;
+				while (plantListJson.charAt(currChar) != '"') {
+					wateringFreq += plantListJson.charAt(currChar);
+				}
+				
+				currChar = currChar + 23;
+				while (plantListJson.charAt(currChar) != '"') {
+					daysSince += plantListJson.charAt(currChar);
+				}
+				
+				PlantModel nextPlant = new PlantModel
+						(plantName, Integer.parseInt(wateringFreq), Integer.parseInt(plantQuantity), Integer.parseInt(daysSince), this);
+				allPlants.add(nextPlant);
+			}
+		}
 		
+		return allPlants;
+	}
+	
+	public String jsonToString(JSONObject obj) {
+		String res = obj.toString();
+		return res;
 	}
 
-	public void jsonToMap(String json) {
-		JSONObject obj = new JSONObject(json);
-		//added dependency to pom.xml
-	}
+//	public void jsonToMap() {
+//		plantJsonList.clear();
+//		
+//		JSONObject philo = JSON.parse(philodendron);
+//		JSONObject aloe = JSON.parse(aloevera);
+//		JSONObject fer = JSON.parse(fern);
+//		JSONObject greeno = JSON.parse(greeno);
+//		
+//		plantJsonList.add(philo);
+//		plantJsonList.add(aloe);
+//		plantJsonList.add(fer);
+//		plantJsonList.add(greeno);
+//		
+//		
+//		//JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonString)
+//	}
+	
 	//-----------GET SET METHODS----------------------------------------
 	public long getId() {
 		return user_id;
@@ -135,8 +205,12 @@ public class AppUser {
 		this.email = email;
 	}
 	
-//	public List<PlantModel> getPlants() {
-//		return plants;
+//	public JSONObject getPlants() {
+//		return stringToJson();
+//	}
+	
+//	public void nextDay() {
+//		
 //	}
 //	
 //	public boolean containsPlantType(String plantType) {
@@ -168,19 +242,54 @@ public class AppUser {
 //			
 //			plants.put(plantType, updateList);
 //		}
+		List<PlantModel> allPlants = getPlantList();
 //		
-		
+		for (int i = 0; i < allPlants.size(); i++) {
+//			JSONObject obj = plantJson.get(i);
+			if (allPlants.get(i).getPlantName() == "plantType") {
+				int currNum = allPlants.get(i).getNumOwned();
+				allPlants.get(i).setNumOwned(currNum + 1);
+				break;
+			}
+		}
 	}
 	
 	public void removePlant(String plantType) {//private String plantName; private int wateringFrequency, numOwned, startDate
 		// --------------to implement -----------------------------
 		
+		List<PlantModel> allPlants = getPlantList();
+//		
+		for (int i = 0; i < allPlants.size(); i++) {
+//			JSONObject obj = plantJson.get(i);
+			if (allPlants.get(i).getPlantName() == "plantType") {
+				int currNum = allPlants.get(i).getNumOwned();
+				if (currNum == 0) {
+					//some exception here?
+				}
+				allPlants.get(i).setNumOwned(currNum - 1);
+				break;
+			}
+		}
+		
 	}
 	
-	public boolean needsWatering() {
+	public List<PlantModel> needsWatering() {
 		// --------------to implement====================
 		//---> TRAVERSE THE LIST AND RETURN A LIST OF PLANTS THAT NEED WATERING
-		return false;
+		
+		
+		List<PlantModel> allPlants = getPlantList();
+		List<PlantModel> plantsToWater = new ArrayList<PlantModel>();
+//		
+		for (int i = 0; i < allPlants.size(); i++) {
+//			JSONObject obj = plantJson.get(i);
+			if (allPlants.get(i).getDaysSinceWatering() >= allPlants.get(i).getWateringFrequency()) {
+				plantsToWater.add(allPlants.get(i));
+				//reset daysSinceWatering to 0 depending on whether the user waters their plant or not
+			}
+		}
+		
+		return plantsToWater;
 		
 	}
 	
@@ -194,7 +303,4 @@ public class AppUser {
 				+ ", email=" + email + "]";
 	}
 	
-	
-	
-
 }

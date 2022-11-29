@@ -38,8 +38,8 @@ public class PlantModel implements Serializable{
 	@Column(name = "plant_Index")
 	private int numOwned;
 	
-	@Column(name = "startDate")
-	private int startDate;
+	@Column(name = "daysSinceWatering")
+	private int daysSinceWatering;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -49,12 +49,12 @@ public class PlantModel implements Serializable{
 		super();
 	}
 
-	public PlantModel(String plantName, int wateringFrequency, int numOwned, int startDate, AppUser ap) {
+	public PlantModel(String plantName, int wateringFrequency, int numOwned, int daysSinceWatering, AppUser ap) {
 		super();
 		this.plantName = plantName;
 		this.wateringFrequency = wateringFrequency;
 		this.numOwned = numOwned;
-		this.startDate = startDate;
+		this.daysSinceWatering = daysSinceWatering;
 		this.appUser = ap;
 	}
 	//-----------GET SET METHODS----------------------------------------
@@ -83,18 +83,18 @@ public class PlantModel implements Serializable{
 		this.numOwned = numOwned;
 	}
 
-	public int getStartDate() {
-		return startDate;
+	public int getDaysSinceWatering() {
+		return daysSinceWatering;
 	}
 
-	public void setStartDate(int startDate) {
-		this.startDate = startDate;
+	public void setDaysSinceWatering(int daysSinceWatering) {
+		this.daysSinceWatering = daysSinceWatering;
 	}
 
 	@Override
 	public String toString() {
 		return "PlantModel [plantName=" + plantName + ", wateringFrequency=" + wateringFrequency + ", numOwned="
-				+ numOwned + ", startDate=" + startDate + "]";
+				+ numOwned + ", daysSinceWatering=" + daysSinceWatering + "]";
 	}
 	
 
