@@ -40,6 +40,10 @@ export default function Form() {
         setSubmitted(false);
     };
 
+    const handleImage = () => {
+        console.warn("change photo");
+    }
+
     // Handling the form submission
     // use api call to setError, and setSubmitted
     const handleSubmit = async(e) => {
@@ -92,48 +96,57 @@ export default function Form() {
     };
     
     return (
-        <div className="form">
-            <h1 className="form-header">profile</h1>
+        <div className="overall">
+            <div className="form">
+                <h1 className="form-header">profile</h1>
 
-            <div className="messages"> {errorMessage()} {successMessage()} </div>
+                <div className="messages"> {errorMessage()} {successMessage()} </div>
 
-            <form>
-                <div className="input-container">
-                    <label className="label">username</label>
-                    <input onChange={handleUsername} id="inputs" placeholder="username" className="input" value={username} type="text" />
-                </div>
-
-                <div className="input-container">
-                    <label className="label">password</label>
-                    <input onChange={handlePassword} id="inputs" placeholder="password" className="input" value={password} type="password" />
-                </div>
-                
-                <div className="h-input-container">
-                    <div className="input-container2">
-                        <label className="label">first name</label>
-                        <input onChange={handleFirstName} id="inputs" placeholder="first name" className="input" value={firstName} type="text" />
+                <form>
+                    <div className="input-container">
+                        <label className="label">username</label>
+                        <input onChange={handleUsername} id="inputs" placeholder="username" className="input" value={username} type="text" />
                     </div>
 
-                    <div className="input-container2">
-                        <label className="label">last name</label>
-                        <input onChange={handleLastName} id="inputs" placeholder="last name" className="input" value={lastName} type="text" />
+                    <div className="input-container">
+                        <label className="label">password</label>
+                        <input onChange={handlePassword} id="inputs" placeholder="password" className="input" value={password} type="password" />
                     </div>
-                </div>
+                    
+                    <div className="h-input-container">
+                        <div className="input-container2">
+                            <label className="label">first name</label>
+                            <input onChange={handleFirstName} id="inputs" placeholder="first name" className="input" value={firstName} type="text" />
+                        </div>
 
-                <div className="input-container">
-                    <label className="label">email</label>
-                    <input onChange={handleEmail} id="inputs" placeholder="email" className="input" value={email} type="email" />
-                </div>
+                        <div className="input-container3">
+                            <label className="label">last name</label>
+                            <input onChange={handleLastName} id="inputs" placeholder="last name" className="input" value={lastName} type="text" />
+                        </div>
+                    </div>
 
-                <button onClick={handleSubmit} className="btn" type="logout">Logout</button>
-                <div className="logout">
-                    <img source={logout} />
-                </div>
-                {/* <Image source={x} /> */}
-            </form>
+                    <div className="input-container">
+                        <label className="label">email</label>
+                        <input onChange={handleEmail} id="inputs" placeholder="email" className="input" value={email} type="email" />
+                    </div>
 
-            {/* CHANGE */}
-            <button onClick={handleSubmit} className="btn2" type="change">change photo</button>
+                    <button onClick={handleSubmit} className="btn" type="logout">Logout</button>
+                    {/* <div className="logout">
+                        <img source={logout} />
+                    </div> */}
+                </form>
+            </div>
+
+            <div className="photo">
+                <div className="circle">
+                </div>
+                <h1 className="header">First last</h1>
+                <button onClick={handleImage} className="btn2" type="change">change photo</button>
+            </div>
+
+            {/* <div className="x">
+                <Image source={x} />
+            </div> */}
         </div>
     );
 }

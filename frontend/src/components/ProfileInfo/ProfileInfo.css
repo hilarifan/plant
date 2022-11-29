@@ -1,3 +1,32 @@
+.overall {
+    margin-top: -85px;
+}
+
+.circle {
+    border: 1px solid;
+    border-color: #D9D9D9;
+    background-color: #D9D9D9;
+    margin-top: -550px;
+    margin-left: 120px;
+    height: 350px;
+    width: 350px;
+    border-radius: 50%;
+}
+
+.header {
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-family: 'Gluten SemiBold';
+    color: #306B34;
+    margin-left: -710px;
+    font-size: 50px;
+}
+
+.photo {
+    margin-top: -180px;
+}
+
 .form {
     border: 5px solid #306B34;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -39,12 +68,19 @@
     display: flex;
     flex-direction: row;
     padding-bottom: 25px;
-    width:80vh;
+    width:180vh;
     justify-content: space-between;
 }
 
 .input-container2 {
-    /* margin-left: 500px; */
+    margin-left: 600px;
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+}
+
+.input-container3 {
+    margin-right: 105px;
     display: flex;
     flex-direction: column;
     width: 270px;
@@ -98,11 +134,11 @@
     color: #306B34;
     background-color: #EFF7CD;
     border-radius: 30px;
-    font-size: 30px;
+    font-size: 20px;
     font-family: 'Gluten SemiBold';
     padding: 12px 25px 12px 25px;
-    margin-top: 15px;
-    margin-bottom: -80px;
-    margin-left: -700px;
+    margin-top: 10px;
+    margin-bottom: -70px;
+    margin-left: -720px;
     padding-right: 10px;
 }
