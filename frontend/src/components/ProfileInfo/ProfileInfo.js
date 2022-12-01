@@ -4,6 +4,7 @@ import validator from 'validator';
 import axios from "axios";
 import logout from '../../images/logout.png'
 import x from '../../images/x.png'
+import person from '../../images/person.png'
 
 export default function Form() {
     
@@ -147,10 +148,8 @@ export default function Form() {
             </div>
 
             <div className="photo">
-                <div className="circle">
-                </div>
+                <img src={person} className="person" />
                 <h1 className="header">First last</h1>
-                <button onClick={handleImage} className="btn2" type="change">change photo</button>
             </div>
         </div>
     );
