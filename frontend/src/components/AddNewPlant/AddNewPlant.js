@@ -1,32 +1,39 @@
 import React, { useState } from 'react'
 import './AddNewPlant.css'
 import CancelIcon from '@mui/icons-material/Cancel'
-import axios from 'axios'
+// import axios from 'axios'
+
 
 const AddNewPlant = ({ setIsModalVisible }) => {
   const [closeModal, setCloseModal] = useState(false)
 
+  const {state} = useLocation();
+  var id = state.id;
+
   // data state
-  const [planetValue, setPlanetValue] = useState('1')
+  const [plantValue, setPlantValue] = useState('Green onion')
   const [dayValue, setDayValue] = useState('monday')
   const [timeValue, setTimeValue] = useState('')
   const [meridiemValue, setMeridiemValue] = useState('')
+  const [userID, setUserID] = useState('');
 
-  const handleSubmit = async () => {
-    console.log(planetValue, dayValue, timeValue, meridiemValue)
-    await axios.post('http://localhost:8080/addPlant', {
-      planetValue,
-      dayValue,
-      timeValue,
-      meridiemValue,
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+
+    setUserID(id);
+    const addPlant = {
+      plantType : plantValue,
+      userID : userID
+    }
+    
+    const response = await fetch("http://localhost:8080/addPlant", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(addPlant),
     })
-
-    setPlanetValue('')
-    setDayValue('monday')
-    setTimeValue('')
-    setMeridiemValue('')
+    console.log(await response.json());
   }
-  console.log("loggin stuff here");
+
   return (
     <div
       className={closeModal ? 'modal-container-invisible' : 'modal-container'}
@@ -51,11 +58,13 @@ const AddNewPlant = ({ setIsModalVisible }) => {
           <div className='first-select-div'>
             <select style={{fontFamily: "Gluten Medium"}}
               onChange={(e) => {
-                setPlanetValue(e.target.value)
+                setPlantValue(e.target.value)
               }}
             >
-              <option value='1'>1</option>
-              <option value='2'>2</option>
+              <option value='greeno'>Green onion</option>
+              <option value='philo'>Philodendron</option>
+              <option value='aloe'>Aloe vera</option>
+              <option value='fern'>Fern</option>
             </select>
           </div>
           <label htmlFor=''>when was the last time you waterd it?</label>
@@ -94,7 +103,8 @@ const AddNewPlant = ({ setIsModalVisible }) => {
         <button style={{fontFamily: "Gluten Medium"}}
           className='submit-btn'
           disabled={
-            !planetValue || !dayValue || !timeValue || !meridiemValue
+            // !plantValue || !dayValue || !timeValue || !meridiemValue
+            !plantValue
               ? true
               : false
           }
