@@ -62,7 +62,7 @@ export default function Form() {
                 password: password
             }
     
-            const response = await fetch("http://localhost:3000/signup", {
+            const response = await fetch("http://localhost:8080/addUser", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(user),
