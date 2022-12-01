@@ -7,6 +7,17 @@
     src: url('/src/fonts/Gluten-SemiBold.ttf');
 }
 
+.x {
+}
+
+.yellow-page {
+    background-color: #EFF7CD;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .green-page {
     background-color: #306B34;
     height: 100%;
