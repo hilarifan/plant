@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import './SignupForm.css';
 import validator from 'validator';
-import { Link, useNavigate } from 'react-router-dom';
-
 import axios from "axios";
  
 export default function Form() {
@@ -14,12 +12,9 @@ export default function Form() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
 
-    const navigate = useNavigate();
-
     // States for checking the errors
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
 
     // Handling the name change
     const handleUsername = (e) => {
@@ -51,50 +46,44 @@ export default function Form() {
 
         if (username === '' || firstName === '' || lastName === '' || email === '' || password === '') {
             setError(true);
-            setErrorMessage('Please fill in all the fields');
         } 
         else if (!validator.isEmail(email))  {
             setError(true);
-            setErrorMessage('Please enter a valid email');
         }
         else {
-
-            const user  = {
-                username: username,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password
-            }
-    
-            const response = await fetch("http://localhost:8080/signup", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify(user),
-            })
-            //console.log(await response.json())
-            const r_json = response.json();
-            console.log(r_json);
-            
-            const obj = JSON.parse(r_json);
-
-            if (obj.error == true) {
-                setError(true);
-                setErrorMessage(obj.errorMessage);
-            }
-            else {
-                setSubmitted(true);
-                setError(false);
-                navigate("/login", {state: {id: obj.id}}); // change this to home later
-            }
+            setSubmitted(true);
+            setError(false);
         }
+        const user  = {
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        }
+
+        const response = await fetch("http://localhost:3000/signup", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(user),
+        })
+        console.log(await response.json())
+    };
+
+    // Showing success message
+    const successMessage = () => {
+        return (
+            <div className="success" style={{display: submitted ? '' : 'none'}}>
+                <h1>Yay! {firstName} {lastName} successfully registered!!</h1>
+            </div>
+        );
     };
 
     // Showing error message if error is true
-    const handleErrorMessage = () => {
+    const errorMessage = () => {
         return (
             <div className="error" style={{display: error ? '' : 'none'}}>
-                <h1>{errorMessage}</h1>
+                <h1>fix error message</h1>
             </div>
         );
     };
@@ -103,7 +92,8 @@ export default function Form() {
         <div className="form">
             <h1 className="form-header">sign up</h1>
 
-            <div className="messages"> {handleErrorMessage()}</div>
+            <div className="messages"> {errorMessage()} {successMessage()} </div>
+            {/* <div className="messages"> {errorMessage()}</div> */}
             
             <form>
                 {/* Labels and inputs for form data */}
