@@ -34,7 +34,7 @@
     margin-top: -180px;
 }
 
-.form {
+.form1 {
     border: 5px solid #306B34;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
@@ -44,10 +44,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* justify-content:space-evenly; */
+    /* justify-content:space-evenly;*/
 }
 
-.form-header {
+.form-header1 {
     margin: 0;
     padding-top: 30px;
     padding-bottom: 25px;
@@ -64,7 +64,7 @@
     padding-right: 10px;
 }
 
-.input-container {
+.input-container1 {
     margin-left: 600px;
     padding-bottom: 25px;
     width: 80vh;
@@ -75,7 +75,7 @@
     color: #EFF7CD;
 }
 
-.h-input-container {
+.h-input-container1 {
     display: flex;
     flex-direction: row;
     padding-bottom: 25px;
@@ -83,7 +83,7 @@
     justify-content: space-between;
 }
 
-.input-container2 {
+.input-container22 {
     margin-left: 600px;
     display: flex;
     flex-direction: column;
@@ -97,7 +97,7 @@
     width: 270px;
 }
 
-.label {
+.label1 {
     float: left;
     font-family: 'Gluten SemiBold';
     font-size: 25px;
@@ -106,7 +106,7 @@
     padding-bottom: 5px;
 }
 
-.input {
+.input1 {
     font-family: 'Gluten SemiBold';
     font-size: 25px;
     height: 55px;
@@ -118,7 +118,7 @@
     padding-left: 20px;
 }
 
-.error {
+.error1 {
     color: #FF6262;
     height: 20px;
     font-family: 'Gluten Medium';
@@ -132,7 +132,7 @@
     /* FIX */
 }
 
-.btn {
+.btn1 {
     border: 4px solid #306B34;
     color: #306B34;
     background-color: #EFF7CD;

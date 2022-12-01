@@ -85,7 +85,7 @@ export default function Form() {
     // Showing success message
     const successMessage = () => {
         return (
-            <div className="success" style={{display: submitted ? '' : 'none'}}>
+            <div className="success1" style={{display: submitted ? '' : 'none'}}>
                 <h1>Yay! {firstName} {lastName} successfully registered!!</h1>
             </div>
         );
@@ -94,7 +94,7 @@ export default function Form() {
     // Showing error message if error is true
     const errorMessage = () => {
         return (
-            <div className="error" style={{display: error ? '' : 'none'}}>
+            <div className="error1" style={{display: error ? '' : 'none'}}>
                 <h1>fix error message</h1>
             </div>
         );
@@ -102,8 +102,8 @@ export default function Form() {
     
     return (
         <div className="overall">
-            <div className="form">
-                <h1 className="form-header">profile</h1>
+            <div className="form1">
+                <h1 className="form-header1">profile</h1>
 
                 <div className="x">
                     {/* <button><img src={x} className="x" onClick={handleClose} /></button> */}
@@ -113,36 +113,36 @@ export default function Form() {
                 <div className="messages"> {errorMessage()} {successMessage()} </div>
 
                 <form>
-                    <div className="input-container">
-                        <label className="label">username</label>
-                        <input onChange={handleUsername} id="inputs" placeholder="username" className="input" value={username} type="text" />
+                    <div className="input-container1">
+                        <label className="label1">username</label>
+                        <input onChange={handleUsername} id="inputs" placeholder="username" className="input1" value={username} type="text" />
                     </div>
 
-                    <div className="input-container">
-                        <label className="label">password</label>
-                        <input onChange={handlePassword} id="inputs" placeholder="password" className="input" value={password} type="password" />
+                    <div className="input-container1">
+                        <label className="label1">password</label>
+                        <input onChange={handlePassword} id="inputs" placeholder="password" className="input1" value={password} type="password" />
                     </div>
                     
-                    <div className="h-input-container">
-                        <div className="input-container2">
-                            <label className="label">first name</label>
-                            <input onChange={handleFirstName} id="inputs" placeholder="first name" className="input" value={firstName} type="text" />
+                    <div className="h-input-container1">
+                        <div className="input-container22">
+                            <label className="label1">first name</label>
+                            <input onChange={handleFirstName} id="inputs" placeholder="first name" className="input1" value={firstName} type="text" />
                         </div>
 
                         <div className="input-container3">
-                            <label className="label">last name</label>
-                            <input onChange={handleLastName} id="inputs" placeholder="last name" className="input" value={lastName} type="text" />
+                            <label className="label1">last name</label>
+                            <input onChange={handleLastName} id="inputs" placeholder="last name" className="input1" value={lastName} type="text" />
                         </div>
                     </div>
 
-                    <div className="input-container">
-                        <label className="label">email</label>
-                        <input onChange={handleEmail} id="inputs" placeholder="email" className="input" value={email} type="email" />
+                    <div className="input-container1">
+                        <label className="label1">email</label>
+                        <input onChange={handleEmail} id="inputs" placeholder="email" className="input1" value={email} type="email" />
                     </div>
 
                     <div>
                         {/* <img src={logout} className="logout"/> */}
-                        <button onClick={handleSubmit} className="btn" type="logout">Logout</button>
+                        <button onClick={handleSubmit} className="btn1" type="logout">Logout</button>
                     </div>
                 </form>
             </div>
