@@ -41,7 +41,7 @@ export default function Form() {
                 headers: { 'Content-Type': 'application/json'}
             })
             console.log(await response.json())
-        }
+        } 
     };
 
     // Showing success message
