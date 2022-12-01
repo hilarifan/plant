@@ -62,22 +62,13 @@ export default function Form() {
                 password: password
             }
     
-            const response = await fetch("http://localhost:3000/signup", {
+            const response = await fetch("http://localhost:8080/signup", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(user),
             })
             console.log(await response.json())
         }
-    };
-
-    // Showing success message
-    const successMessage = () => {
-        return (
-            <div className="success" style={{display: submitted ? '' : 'none'}}>
-                <h1>Yay! {firstName} {lastName} successfully registered!!</h1>
-            </div>
-        );
     };
 
     // Showing error message if error is true
@@ -93,8 +84,7 @@ export default function Form() {
         <div className="form">
             <h1 className="form-header">sign up</h1>
 
-            <div className="messages"> {errorMessage()} {successMessage()} </div>
-            {/* <div className="messages"> {errorMessage()}</div> */}
+            <div className="messages"> {errorMessage()}</div>
             
             <form>
                 {/* Labels and inputs for form data */}
