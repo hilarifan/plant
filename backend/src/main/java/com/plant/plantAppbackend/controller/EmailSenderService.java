@@ -1,4 +1,6 @@
-package com.plant.plantAppbackend.Service;
+package com.plant.plantAppbackend.controller;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -6,6 +8,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.plant.plantAppbackend.Model.AppUser;
+import com.plant.plantAppbackend.Model.PlantModel;
+
 
 @Service
 public class EmailSenderService {
@@ -45,8 +49,20 @@ public class EmailSenderService {
 	}
 	
 
-	public void sendEmail(AppUser user, String plantsToWater) {
-
+	public void sendEmail(AppUser user) {
+		List<PlantModel> plantList = user.needsWatering();
+	
+//		if (plantList.size() == 0) {
+//			String bodyString 
+//		}
+		String plantsToWater = "";
+		if (plantList.size() != 0) {
+			for (int i = 0; i < plantList.size(); i++) {
+				PlantModel curr = plantList.get(i);
+				plantsToWater += curr.getPlantName() + ", ";
+			}
+		}
+		
 		
 		String emailAddress = user.getEmail();
 		String subject = "time to water your garden!";

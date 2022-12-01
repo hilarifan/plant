@@ -8,14 +8,19 @@ import org.springframework.mail.MailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plant.plantAppbackend.PlantAppBackendApplication;
+import com.plant.plantAppbackend.Model.AddPlantForm;
 import com.plant.plantAppbackend.Model.AppUser;
+import com.plant.plantAppbackend.Model.LoginForm;
 import com.plant.plantAppbackend.Repository.UserRepository;
-import com.plant.plantAppbackend.Service.EmailSenderService;
+
+import net.bytebuddy.asm.Advice.Return;
 
 
 
@@ -47,7 +52,46 @@ public class UserController {//corresponds to "users" in video
 		// TODO Auto-generated constructor stub
 	}
 	
+	@GetMapping("/login")
+	@ResponseBody
+	public String loginUser(@RequestBody LoginForm login){
+		String username = login.getUserName();
+		
+		List<AppUser> users = this.userRepository.findByUsername(username);
+		
+		AppUser currAppUser= users.get(0);
+		Long userIDLong = currAppUser.getId();
+		if (currAppUser.psswdValidation(username) == true || users.isEmpty())  {
+			return "{\"error\":true, \"errorMessage\":"
+					+ "\"wrong username or password”, "
+					+ "“id” :" + userIDLong.toString()
+					+"}";
 
+		}
 	
+		return "{\"error\":false, \"errorMessage\":"
+		+ "\"successful login”, "
+		+ "“id” :" + userIDLong.toString()
+		+"}";
 
+
+	}
+	
+	//IF TIME PERMITS : USE SPRING BOOT VALIDATION!! 
+	@PutMapping("/addPlant/{id}")
+	public @ResponseBody String addPlantFromFrontend(@RequestBody AddPlantForm addRequest) {
+		
+		List<AppUser> findUsers = userRepository.findByUserid(addRequest.getUserId());
+		AppUser currAppUser =findUsers.get(0);
+		
+		currAppUser.addPlantUpdateString(addRequest.getPlantType());
+		userRepository.save(currAppUser);
+		
+		return "Successfully updated user";
+		
+	}
+	
+	
+	
+	
 }

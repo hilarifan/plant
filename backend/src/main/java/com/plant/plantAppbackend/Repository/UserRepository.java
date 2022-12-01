@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.plant.plantAppbackend.Model.AppUser;
-import com.plant.plantAppbackend.Service.EmailSenderService;
+import com.plant.plantAppbackend.controller.EmailSenderService;
 
 /** 
  * 
@@ -39,7 +39,8 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 	
 	List<AppUser> findAll();
 	
-	
+	List<AppUser> findByUsername(String username);
+	List<AppUser> findByUserid(Long id);
 	
 
 
