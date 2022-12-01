@@ -16,18 +16,20 @@ export default function Water({handleClick, notClicked}) {
 
     const navigate = useNavigate();
 
-    const getResponse = async() => {
-        const response = await fetch("", {
+    const getResponse = async(e) => {
+        e.preventDefault();
+
+        const response = await fetch("http://localhost:8080/canWater/${id}", {
             method: 'GET',
             headers: { 'Content-Type': 'application/json'},
         })
 
-        const data = response.json();
+        const data = await response.json();
         console.log(data);
 
         const obj = JSON.parse(data);
 
-        if(obj.error == false) {
+        if(obj.canWater == false) {
             setWater(true);
         }
     }
