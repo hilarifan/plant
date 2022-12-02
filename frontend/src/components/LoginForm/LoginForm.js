@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './LoginForm.css';
 import { Link, useNavigate } from 'react-router-dom';
 import validator from 'validator';
@@ -46,14 +46,15 @@ export default function Form() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(user)
-            });
-            const r_json = response.json();
+            })
+
+            const obj = await response.json();
             
             //const r_json = '{"error":true, "errorMessage":"choose a different username"}'; //remove this
             //const r_json = '{"error":false, "id":3}'; 
 
             console.log(r_json);
-            const obj = JSON.parse(r_json);
+            // const obj = JSON.parse(r_json);
 
             if (obj.error == true) {
                 setError(true);
@@ -101,6 +102,9 @@ export default function Form() {
                 </div>                
                 <button onClick={handleSubmit} className="btn" type="submit">Submit</button>
             </form>
+
+            <Link to={'/profile'} className="guest-link">view as guest</Link> 
+
         </div>
     );
 }

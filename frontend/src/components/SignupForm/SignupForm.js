@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './SignupForm.css';
 import validator from 'validator';
 import { Link, useNavigate } from 'react-router-dom';
@@ -73,10 +73,10 @@ export default function Form() {
                 body: JSON.stringify(user),
             })
             //console.log(await response.json())
-            const r_json = response.json();
+            const obj = response.json();
             console.log(r_json);
             
-            const obj = JSON.parse(r_json);
+            // const obj = JSON.parse(r_json);
 
             if (obj.error == true) {
                 setError(true);

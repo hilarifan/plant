@@ -1,13 +1,10 @@
 @font-face {
     font-family: 'Gluten Medium';
-    src: url('/src/fonts/Gluten-Medium.ttf');
+    src: url('../../fonts/Gluten-Medium.ttf');
 }
 @font-face {
     font-family: 'Gluten SemiBold';
-    src: url('/src/fonts/Gluten-SemiBold.ttf');
-}
-
-.x {
+    src: url('../../fonts/Gluten-SemiBold.ttf');
 }
 
 .yellow-page {
