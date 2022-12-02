@@ -1,0 +1,78 @@
+.modal-container {
+    font-family: 'Gluten Medium';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  
+  .modal {
+    background: #3e6b3c;
+    width: 600px;
+    color: #eff5d0;
+    max-width: 100%;
+    padding: 30px 10px;
+    border-radius: 5px;
+    margin: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.812);
+  }
+  .modal-container-invisible {
+    display: none;
+  }
+  .modal-submit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .modal-submit-form label {
+    margin-bottom: 3px;
+  }
+  .first-select-div {
+    font-family: 'Gluten Medium';
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .second-select-div {
+    
+    width: 100%;
+    display: flex;
+    /* flex: 2 1 auto; */
+  }
+  
+  .second-select-div select {
+    margin-right: 4px;
+  }
+  .second-select-div div {
+    display: flex;
+  }
+  
+  .second-select-div div input {
+    width: 50px;
+    border-radius: 15px;
+    outline: none;
+    border: 1px solid black;
+    margin-right: 2px;
+    background: #eff5d0;
+  }
+  select {
+    width: 100%;
+    padding: 6px;
+    background: #eff5d0;
+    border-radius: 15px;
+  }
+  .submit-btn {
+    float: right;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 5px;
+    background: #3e6b3c;
+    border: 2px solid #eff5d0;
+    color: #eff5d0;
+    cursor: pointer;
+  }
