@@ -72,23 +72,18 @@ export default function Form() {
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(user),
             })
-            // console.log(await response.json())
-           // const r_json = response.json();
-            // console.log(r_json);
-            console.log("printing response")
-            console.log(response.json());
             
-            // const obj = JSON.parse(r_json);
+            const obj = await response.json();
 
-            // if (obj.error == true) {
-            //     setError(true);
-            //     setErrorMessage(obj.errorMessage);
-            // }
-            // else {
-            //     setSubmitted(true);
-            //     setError(false);
-            //     navigate("/login", {state: {id: obj.id}}); // change this to home later
-            // }
+            if (obj.error == "true") {
+                setError(true);
+                setErrorMessage(obj.errorMessage);
+            }
+            else {
+                setSubmitted(true);
+                setError(false);
+                navigate("/login", {state: {id: obj.id}}); // change this to home later
+            }
         }
     };
 

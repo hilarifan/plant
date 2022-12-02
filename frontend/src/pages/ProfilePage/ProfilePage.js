@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProfilePage.css'
-import Form from '../../components/ProfileInfo/ProfileInfo'
+import Form from '../../components/ProfileInfo/ProfileInfo1'
 
 export default function ProfilePage() {
     return (

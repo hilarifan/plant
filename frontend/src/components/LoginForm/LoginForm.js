@@ -58,13 +58,13 @@ export default function Form() {
             if (obj.error == "true") {
                 setError(true);
                 setErrorMessage(obj.errorMsg);
-                console.log(obj.errorMsg)
+                //console.log(obj.errorMsg);
             }
             else {
                 setError(false);
                 setSubmitted(true);
-                navigate("/signup", {state: {id: obj.id}}); // change this to home later
-                console.log(obj.error);
+                navigate("/profile", {state: {id: obj.id}}); // change this to home later
+                //console.log(obj.error);
                 // if u want to use id do this:
                 // const {state} = useLocation();
                 // var id = state.id;
