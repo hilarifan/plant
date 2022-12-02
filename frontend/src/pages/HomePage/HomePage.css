@@ -1,0 +1,52 @@
+.yellow-page {
+    background-color: #EFF7CD;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Gluten SemiBold';
+
+}
+.minus{
+    position: absolute;
+    width: 68px;
+    height: 68px;
+    left: 1000px;
+    top: 100px;
+}
+
+.plus{
+    position: absolute;
+    width: 68px;
+    height: 68px;
+    left: 1100px;
+    top: 100px;
+}
+.board{
+    position: absolute;
+    width: 1512px;
+    height: 33px;
+    left: 0px;
+    top: 480px;
+    
+}
+.water-img{
+    width: 96px;
+    height: 89.98px; 
+    margin: 0 auto;  
+}
+
+.redminus-img{
+    width: 42px;
+    height: 42px;  
+}
+
+.pot-item{
+    width: 200px;
+    height: 400px; 
+}
+
+img {
+    width: 100%;
+}
