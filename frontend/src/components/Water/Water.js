@@ -19,7 +19,7 @@ export default function Water({handleClick, notClicked}) {
     const getResponse = async(e) => {
         e.preventDefault();
 
-        const response = await fetch("http://localhost:8080/canWater/${id}", {
+        const response = await fetch("http://localhost:8080/canWater/${id}/fern", { //   {id/plantType} -- fern for testing 
             method: 'GET',
             headers: { 'Content-Type': 'application/json'},
         })

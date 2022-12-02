@@ -41,32 +41,34 @@ export default function Form() {
                 username: username,
                 password: password
             }
-
+            //console.log(JSON.stringify(user));
             const response = await fetch("http://localhost:8080/login", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(user)
             });
-            const r_json = response.json();
             
-            //const r_json = '{"error":true, "errorMessage":"choose a different username"}'; //remove this
-            //const r_json = '{"error":false, "id":3}'; 
+            //object gets the json object response from backend
+            const obj = await response.json();
+            
+            // console.log(obj)
+            // console.log(obj.error);
 
-            console.log(r_json);
-            const obj = JSON.parse(r_json);
-
-            if (obj.error == true) {
+            //check bj.JsonParameter 
+            if (obj.error == "true") {
                 setError(true);
-                setErrorMessage(obj.errorMessage);
+                setErrorMessage(obj.errorMsg);
+                console.log(obj.errorMsg)
             }
             else {
                 setError(false);
                 setSubmitted(true);
                 navigate("/signup", {state: {id: obj.id}}); // change this to home later
+                console.log(obj.error);
                 // if u want to use id do this:
                 // const {state} = useLocation();
                 // var id = state.id;
-            }
+           }
         }
     };
 

@@ -204,6 +204,8 @@ public class AppUser {
 	
 
 	public Boolean psswdValidation(String pRequest) {
+//		System.out.println("this is the password " + getPassword());
+//		System.out.println("this is the inputted password " + pRequest);
 		if (getPassword().equals(pRequest)){
 			return true;
 		}
@@ -230,6 +232,29 @@ public class AppUser {
 		this.setPlantListJson(newJson);
 		System.out.println("This should be the udpated plantlistjson! " + this.getPlantListJson());
 //		plantListJson = newJson;
+	}
+	//------------------CONNECTS TO WATER.JS-------------
+	//--> GOES THORUGH LIST AND AND CHECKS IF PLANTTYPE NEEDS TO BE WATERED-----
+	
+	@Async
+	public String doesUserWaterPlants(String plant) {
+		List<PlantModel> plantsToWater = needsWatering();
+		
+		String res = "[{" + '"' + "UserPlantsToWater" + '"' + ": " + '"' + "No" + '"' + "}]";
+		
+		if (plantsToWater.size() == 0) {
+			return res;
+		}
+		
+		for (int i = 0; i < plantsToWater.size(); i++) {
+			PlantModel currPlant = plantsToWater.get(i);
+			if (currPlant.getPlantName().toLowerCase().equals(plant.toLowerCase())) {
+				res = "[{" + '"' + "UserPlantsToWater" + '"' + ": " + '"' + "Yes" + '"' + "}]";
+				return res;
+			}
+		}
+		
+		return res;
 	}
 
 	
