@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './LoginForm.css';
 import { Link, useNavigate } from 'react-router-dom';
 import validator from 'validator';
@@ -103,6 +103,8 @@ export default function Form() {
                 </div>                
                 <button onClick={handleSubmit} className="btn" type="submit">Submit</button>
             </form>
+
+            <Link to={'/profile'} className="guest-link">view as guest</Link>
         </div>
     );
 }

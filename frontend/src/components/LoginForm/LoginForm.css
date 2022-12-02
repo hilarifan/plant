@@ -23,3 +23,11 @@
     padding-bottom: 10px;
     padding-top: 30px;
 }
+
+.guest-link {
+    font-family: 'Gluten Medium';
+    font-size: 20;
+    color: #EFF7CD;
+    align-self:flex-end;
+    padding-right: 75px;
+}
