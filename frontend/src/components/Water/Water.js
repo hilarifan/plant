@@ -24,10 +24,8 @@ export default function Water({handleClick, notClicked}) {
             headers: { 'Content-Type': 'application/json'},
         })
 
-        const data = await response.json();
+        const obj = await response.json();
         console.log(data);
-
-        const obj = JSON.parse(data);
 
         if(obj.canWater == false) {
             setWater(true);

@@ -38,16 +38,14 @@ export default function Form() {
     // get all user id info
     const getData = async(e) => {
         e.preventDefault();
-        
+
         const response = await fetch("http://localhost:8080/getData/${id}", {
             method: 'GET',
             headers: { 'Content-Type': 'application/json'},
         })
 
-        const data = await response.json();
+        const obj = await response.json();
         console.log(data);
-
-        const obj = JSON.parse(data);
 
         setUsername(obj.username);
         setPassword(obj.password);
