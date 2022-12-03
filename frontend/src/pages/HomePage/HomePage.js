@@ -89,7 +89,7 @@ const HomePage = () => {
     // ]'
     useEffect(() => { //react hook that runs whenever a component loads
         getPlants();
-    }, []);
+    }, );
 
 
     const [potChange, setPotChange] = useState(false)
