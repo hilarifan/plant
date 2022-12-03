@@ -26,12 +26,12 @@ public class PlantController {
 	@Autowired
 	private PlantRepository plantRepository;
 	
-	@PostMapping("/addPlant")
+	//@PostMapping("/addPlant")
 	PlantModel addPlant(@RequestBody PlantModel newPlant) {
 		return plantRepository.save(newPlant);
 	}
 	
-	@GetMapping("/getPlant")
+	//@GetMapping("/getPlant")
 	public List<PlantModel> getPlant(){
 		return this.plantRepository.findAll();
 	}

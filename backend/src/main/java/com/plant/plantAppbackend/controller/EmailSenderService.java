@@ -50,25 +50,26 @@ public class EmailSenderService {
 	
 
 	public void sendEmail(AppUser user) {
+		
 		List<PlantModel> plantList = user.needsWatering();
 	
-//		if (plantList.size() == 0) {
-//			String bodyString 
-//		}
-		String plantsToWater = "";
-		if (plantList.size() != 0) {
-			for (int i = 0; i < plantList.size(); i++) {
-				PlantModel curr = plantList.get(i);
-				plantsToWater += curr.getPlantName() + ", ";
-			}
+		if (plantList.size() == 0) {
+			return;
 		}
+		String plantsToWater = "";
+		
+		for (int i = 0; i < plantList.size(); i++) {
+			PlantModel curr = plantList.get(i);
+			plantsToWater += curr.getPlantName() + ", ";
+		}
+		
 		
 		
 		String emailAddress = user.getEmail();
 		String subject = "time to water your garden!";
 		String body =  "hello from p l a n t!" + "\n" + "the time has come for you to nourish your garden"
 				+ " - and yourself along the way." + "\n" + "please water the following plants today: " + 
-				plantsToWater + "." + "\n" + "be sure to indicate on the p l a n t application whether you've done so!" + "\n" +
+				plantsToWater.substring(0, plantsToWater.length()-2) + "\n" + "be sure to indicate on the p l a n t application whether you've done so!" + "\n" +
 				"remember, for a happy garden, you must water your plants on time and tell us that you did. " + "\n" 
 				+ "have a plantiful day!";
 		

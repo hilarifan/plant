@@ -1,5 +1,6 @@
 package com.plant.plantAppbackend;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -7,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.MailSender;
@@ -29,6 +31,7 @@ import com.plant.plantAppbackend.controller.UserController;
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
+@EnableAutoConfiguration
 public class PlantAppBackendApplication implements CommandLineRunner{
 	
 	@Autowired
@@ -82,23 +85,40 @@ public class PlantAppBackendApplication implements CommandLineRunner{
 //			if (System.currentTimeMillis() >= startTime + 24 * 60 * 60 * 1000) {
 //			addPlantFromFrontendTest(plantToAdd);
 //			addPlantFromFrontendTest(plantToAdd2); TESTING PURPOSES
-			TimeUnit timeUnit = TimeUnit.DAYS;
-			timeUnit.sleep(1);
+			TimeUnit timeUnit = TimeUnit.SECONDS;
+			timeUnit.sleep(10);
 			
-			if (System.currentTimeMillis() >= startTime + 24 * 60 * 60 * 1000) {
-//			if (System.currentTimeMillis() >= startTime + 10000*dayCounter) {
+			if (System.currentTimeMillis() >= startTime +  10000) {
+//			if (System.currentTimeMillis() >= startTime + 24*60*60*1000 *dayCounter) {
 				dayCounter++;
-				
+				System.out.println("ten seconds passed");
 				List<AppUser> allUsers = userRepository.findAll();
+	
 				for (int i = 0; i < allUsers.size(); i++) {
 					AppUser currUser = allUsers.get(i);
 					List<PlantModel> userPlants = currUser.getPlantList();
+					List<PlantModel> newPlantsList = new ArrayList<PlantModel>();
 					for (int j = 0; j < userPlants.size(); j++) {
 						PlantModel currPlant = userPlants.get(j);
 						if (currPlant.getNumOwned() > 0) {
-							currPlant.setDaysSinceWatering(currPlant.getDaysSinceWatering()+1);
+							int newDays = (int)currPlant.getDaysSinceWatering()+ (int)1;
+							currPlant.setDaysSinceWatering(newDays);
+							
+							newPlantsList.add(currPlant);
+							System.out.println("days since watering " + currPlant.getDaysSinceWatering());
+							System.out.println("get plan list: " + currUser.getPlantListJson());
 						}
 					}
+					System.out.println("Saving and emailing plants ");
+					service.sendEmail(currUser);
+					for (int j = 0; j < userPlants.size(); j++) {
+						PlantModel currPlant = userPlants.get(j);
+						if (currPlant.getDaysSinceWatering() >= currPlant.getWateringFrequency()) {
+							currPlant.setDaysSinceWatering(0);
+						}
+					}
+					currUser.listToJSONString(userPlants);
+					userRepository.save(currUser);
 					
 //					List<PlantModel> plantsToWater = currUser.needsWatering();
 //					String needingWater = "";
@@ -107,7 +127,7 @@ public class PlantAppBackendApplication implements CommandLineRunner{
 //						needingWater += currPlant.getPlantName() + "     ";
 //					}
 					//NOTE : all email sending methods moved to EmailSenderService.java
-					service.sendEmail(currUser);
+					
 				}
 //				startTime = startTime - 10000;
 			}
@@ -117,31 +137,31 @@ public class PlantAppBackendApplication implements CommandLineRunner{
 	}
 	//----------FOR TESTING PURPOSES: ORIGINAL FUNCTION IS IN USERCONTROLLER.JAVA-------------
 	
-	public String addPlantFromFrontendTest(AddPlantForm addRequest) {
-			//FOR TESTING PURPOSES
-			//Long idTesterLong = (long) 1; 
-			addRequest.getUserId();
-			List<AppUser> findUsers = userRepository.findByUserid(addRequest.getUserId());
-			System.out.println("these are the users found" + findUsers);
-			
-			AppUser currAppUser;
-			
-			
-			if (findUsers.isEmpty() == false) {
-				currAppUser =findUsers.get(0);
-				currAppUser.addPlantUpdateString(addRequest.getPlantType());
-				userRepository.save(currAppUser);
-				System.out.println("user could not be found by id");
-				return "Successfully updated user";
-			}
-			else {
-				
-				System.out.println("user could not be found by id");
-				return "user could not be found by id";
-	
-			}
-			
-		}
+//	public String addPlantFromFrontendTest(AddPlantForm addRequest) {
+//			//FOR TESTING PURPOSES
+//			//Long idTesterLong = (long) 1; 
+//			addRequest.getUserId();
+//			List<AppUser> findUsers = userRepository.findByUserid(addRequest.getUserId());
+//			System.out.println("these are the users found" + findUsers);
+//			
+//			AppUser currAppUser;
+//			
+//			
+//			if (findUsers.isEmpty() == false) {
+//				currAppUser =findUsers.get(0);
+//				currAppUser.addPlantUpdateString(addRequest.getPlantType());
+//				userRepository.save(currAppUser);
+//				System.out.println("user could not be found by id");
+//				return "Successfully updated user";
+//			}
+//			else {
+//				
+//				System.out.println("user could not be found by id");
+//				return "user could not be found by id";
+//	
+//			}
+//			
+//		}
 
 		   
 

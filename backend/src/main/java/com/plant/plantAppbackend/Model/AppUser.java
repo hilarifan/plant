@@ -85,10 +85,16 @@ public class AppUser {
 	
 	public AppUser() {
 		super();
+//		this.plantListJson = "{\"plants\""
+//				+ ": [{\"Name\":\"Philodendron\",\"Quantity\":\"0\",\"WateringFrequency\":\"10\",\"DaysSinceWatering\":\"0\"},"
+//				+ "{\"Name\":\"Aloe Vera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"},"
+//				+ "{\"Name\":\"Fern\",\"Quantity\":\"0\",\"WateringFrequency\":\"2\",\"DaysSinceWatering\":\"0\"},"
+//				+ "{\"Name\":\"Green Onion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}]}";
 		this.plantListJson = "[{\"Name\":\"Philodendron\",\"Quantity\":\"0\",\"WateringFrequency\":\"10\",\"DaysSinceWatering\":\"0\"},"
-				+ "{\"Name\":\"AloeVera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"Aloe Vera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"},"
 				+ "{\"Name\":\"Fern\",\"Quantity\":\"0\",\"WateringFrequency\":\"2\",\"DaysSinceWatering\":\"0\"},"
-				+ "{\"Name\":\"GreenOnion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}]";
+				+ "{\"Name\":\"Green Onion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}]";
+				
 	}
 	
 	//@Async("threadPoolTaskExecutor")
@@ -100,9 +106,9 @@ public class AppUser {
 		this.email = email;
 
 		this.plantListJson = "[{\"Name\":\"Philodendron\",\"Quantity\":\"0\",\"WateringFrequency\":\"10\",\"DaysSinceWatering\":\"0\"},"
-				+ "{\"Name\":\"AloeVera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"},"
+				+ "{\"Name\":\"Aloe Vera\",\"Quantity\":\"0\",\"WateringFrequency\":\"21\",\"DaysSinceWatering\":\"0\"},"
 				+ "{\"Name\":\"Fern\",\"Quantity\":\"0\",\"WateringFrequency\":\"2\",\"DaysSinceWatering\":\"0\"},"
-				+ "{\"Name\":\"GreenOnion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}]";
+				+ "{\"Name\":\"Green Onion\",\"Quantity\":\"0\",\"WateringFrequency\":\"14\",\"DaysSinceWatering\":\"0\"}]";
 				
 		//everyone starts with no plants --> hashMap with all types of plnats and list[1] = 0 (for numOwned of plantType)
 		//---------------NEED TO SET DEFAULT PLANT---------------------------
@@ -237,26 +243,23 @@ public class AppUser {
 	//--> GOES THORUGH LIST AND AND CHECKS IF PLANTTYPE NEEDS TO BE WATERED-----
 	
 	@Async
-	public String doesUserWaterPlants(String plant) {
+	public CanWaterResponse doesUserWaterPlants(String plant) {
 		List<PlantModel> plantsToWater = needsWatering();
-		
-		String res = "[{" + '"' + "UserPlantsToWater" + '"' + ": " + '"' + "No" + '"' + "}]";
-		
+				
 		if (plantsToWater.size() == 0) {
-			return res;
+			return new CanWaterResponse("no");
 		}
 		
 		for (int i = 0; i < plantsToWater.size(); i++) {
 			PlantModel currPlant = plantsToWater.get(i);
 			if (currPlant.getPlantName().toLowerCase().equals(plant.toLowerCase())) {
-				res = "[{" + '"' + "UserPlantsToWater" + '"' + ": " + '"' + "Yes" + '"' + "}]";
-				return res;
+				return new CanWaterResponse("yes");
 			}
 		}
 		
-		return res;
+		return new CanWaterResponse("no");
 	}
-
+	
 	
 	@Async
 	public void addPlantUpdateString(String plantType) {//private String plantName; private int wateringFrequency, numOwned, startDate
@@ -270,10 +273,19 @@ public class AppUser {
 			System.out.println("The plantName is " + allPlants.get(i).getPlantName());
 			
 			System.out.println("numowned plants: " + allPlants.get(i).getNumOwned());
-			if (allPlants.get(i).getPlantName().toLowerCase().equals(plantType.toLowerCase())) { //lowercase flag
-				int currNum = allPlants.get(i).getNumOwned();
-				allPlants.get(i).setNumOwned(currNum + 1);
-				System.out.println("The currentNumber is " + currNum + 1);
+			String plant1 = allPlants.get(i).getPlantName().toLowerCase();
+			String plant2 = plantType.toLowerCase();
+			System.out.println("Plant 1: " + plant1);
+			System.out.println("Plant 2: " + plant2);
+
+			if (plant1.equals(plant2)) { //lowercase flag
+				int currNum = allPlants.get(i).getNumOwned() + 1;
+				
+				System.out.println("this is curr: " + currNum);
+				allPlants.get(i).setNumOwned(currNum);
+				
+				System.out.println(allPlants.get(i).toString());
+				System.out.println("The currentNumber is " +allPlants.get(i).getNumOwned());
 				break;
 			}
 		}
@@ -290,12 +302,13 @@ public class AppUser {
 //		
 		for (int i = 0; i < allPlants.size(); i++) {
 //			JSONObject obj = plantJson.get(i);
-			if (allPlants.get(i).getPlantName() == "plantType") {
+			if (allPlants.get(i).getPlantName().toLowerCase().equals(plantType.toLowerCase())) {
 				int currNum = allPlants.get(i).getNumOwned();
-				if (currNum == 0) {
-					//some exception here?
+				if (currNum == (int)0) {
+					return;
 				}
-				allPlants.get(i).setNumOwned(currNum - 1);
+				int newNum = (int)currNum - (int)1;
+				allPlants.get(i).setNumOwned((int)newNum);
 				break;
 			}
 		}

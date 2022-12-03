@@ -1,9 +1,9 @@
 package com.plant.plantAppbackend.Model;
 
-public class AddPlantForm {
-	private String plantType;
+public class RemovePlantForm {
 	private Long userId;
-	
+	private String plantType;
+
 	public String getPlantType() {
 		return plantType;
 	}
@@ -16,7 +16,7 @@ public class AddPlantForm {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public AddPlantForm(String plantType, Long userId) {
+	public RemovePlantForm(String plantType, Long userId) {
 		super();
 		this.plantType = plantType;
 		this.userId = userId;
