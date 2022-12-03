@@ -1,34 +1,8 @@
-.yellow-page {
-    background-color: #EFF7CD;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Gluten SemiBold';
-
-}
-
-.board{
+.board1{
     position: absolute;
     width: 1512px;
     height: 33px;
     left: 0px;
     top: 440px;
     
-}
-
-.pot-item{
-    width: 200px;
-    height: 400px; 
-}
-.next{
-    position: absolute;
-    width: 68.03px;
-    left: 1150px;
-    top: 242px;
-}
-
-img {
-    width: 100%;
 }
