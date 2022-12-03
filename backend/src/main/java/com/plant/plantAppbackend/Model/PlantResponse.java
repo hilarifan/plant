@@ -3,7 +3,7 @@ package com.plant.plantAppbackend.Model;
 public class PlantResponse {
 	private String plantType;
 	private int quantity;
-	private String needsWatering;
+	private Boolean needsWatering;
 	
 	public String getPlantType() {
 		return plantType;
@@ -19,13 +19,13 @@ public class PlantResponse {
 	}
 	
 	
-	public String getNeedsWatering() {
+	public Boolean getNeedsWatering() {
 		return needsWatering;
 	}
-	public void setNeedsWatering(String needsWatering) {
+	public void setNeedsWatering(Boolean needsWatering) {
 		this.needsWatering = needsWatering;
 	}
-	public PlantResponse(String plantType, int quantity, String needsWatering) {
+	public PlantResponse(String plantType, int quantity, Boolean needsWatering) {
 		this.plantType = plantType;
 		this.quantity = quantity;
 		this.needsWatering = needsWatering;

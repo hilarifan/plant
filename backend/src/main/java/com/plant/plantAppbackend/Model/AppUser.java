@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONString;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -44,8 +45,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "user_table", schema = "plantData")
 @EnableAsync
+@EnableAutoConfiguration
 public class AppUser {
 	
 	@Id
@@ -328,6 +330,8 @@ public class AppUser {
 		for (int i = 0; i < allPlants.size(); i++) {
 //			JSONObject obj = plantJson.get(i);
 			PlantModel curr = allPlants.get(i);
+			System.out.println("GET DAYS SINCE WATERING " + curr.getDaysSinceWatering());
+			System.out.println("GET WATERING FREQUENCY " + curr.getWateringFrequency());
 			if (curr.getDaysSinceWatering() >= curr.getWateringFrequency()) {
 				plantsToWater.add(curr);
 				curr.setDaysSinceWatering(0);

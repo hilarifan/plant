@@ -103,7 +103,8 @@ public class PlantAppBackendApplication implements CommandLineRunner{
 						if (currPlant.getNumOwned() > 0) {
 							int newDays = (int)currPlant.getDaysSinceWatering()+ (int)1;
 							currPlant.setDaysSinceWatering(newDays);
-							
+							System.out.println("days since watering " + currPlant.getDaysSinceWatering());
+
 							newPlantsList.add(currPlant);
 							System.out.println("days since watering " + currPlant.getDaysSinceWatering());
 							System.out.println("get plan list: " + currUser.getPlantListJson());
@@ -113,9 +114,9 @@ public class PlantAppBackendApplication implements CommandLineRunner{
 					service.sendEmail(currUser);
 					for (int j = 0; j < userPlants.size(); j++) {
 						PlantModel currPlant = userPlants.get(j);
-						if (currPlant.getDaysSinceWatering() >= currPlant.getWateringFrequency()) {
-							currPlant.setDaysSinceWatering(0);
-						}
+//						if (currPlant.getDaysSinceWatering() >= currPlant.getWateringFrequency()) {
+//							currPlant.setDaysSinceWatering(0);
+//						}
 					}
 					currUser.listToJSONString(userPlants);
 					userRepository.save(currUser);

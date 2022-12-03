@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import com.plant.plantAppbackend.Model.AppUser;
 import com.plant.plantAppbackend.Model.CanWaterResponse;
 import com.plant.plantAppbackend.Model.LoginForm;
 import com.plant.plantAppbackend.Model.LoginValidResponse;
+import com.plant.plantAppbackend.Model.NeedsWateringForm;
 import com.plant.plantAppbackend.Model.PlantModel;
 import com.plant.plantAppbackend.Model.PlantResponse;
 import com.plant.plantAppbackend.Model.RemovePlantForm;
@@ -52,7 +54,17 @@ public class UserController {//corresponds to "users" in video
 	AppUser addUser(@RequestBody AppUser newUser) {
 //		PlantAppBackendApplication.sendIntroEmail(newUser);
 		System.out.println("Attempting to sign up new user");
-		service.sendIntroEmail(newUser);
+		List<AppUser> users = this.userRepository.findByUsername(newUser.getUsername());
+		
+		//cannot find users of this username
+		if (!users.isEmpty()) {
+			newUser.setId((int)-1);
+			return newUser;
+		}
+		else {
+			service.sendIntroEmail(newUser);
+		}
+		
 		return userRepository.save(newUser);
 //		try {
 //			userRepository.save(newUser);
@@ -144,10 +156,10 @@ public class UserController {//corresponds to "users" in video
 				Boolean water = wateringPlantsNecessary(Long.parseLong(id), plantName);
 				PlantResponse newPlantResponse;
 				if (water==false) {
-					newPlantResponse = new PlantResponse(plantName, quant, "no");
+					newPlantResponse = new PlantResponse(plantName, quant, false);
 				}
 				else {
-					newPlantResponse = new PlantResponse(plantName, quant, "yes");
+					newPlantResponse = new PlantResponse(plantName, quant, true);
 				}
 				
 				plantList.add(newPlantResponse);
@@ -228,13 +240,48 @@ public class UserController {//corresponds to "users" in video
 			return "user could not be found by id";
 
 		}
-		
-		
-		
-		
+			
+	}
 	
+	@Async
+	@PostMapping("/waterPlant") // ASK GRACE HOW SHE IS PASSING ME 
+	public @ResponseBody String doesPlantNeedWater(@RequestBody NeedsWateringForm wateringRequest) {
+		System.out.println("frontend asking about water....");
+
+		System.out.println("id is " + wateringRequest.getUserId());
+		System.out.println("user plant type " + wateringRequest.getPlantType());
+//		System.out.println("needs water " + wateringRequest.getNeedsWatering());
+//		String needsWater = wateringRequest.getNeedsWatering();
+		List<AppUser> findUsers = userRepository.findByUserid(wateringRequest.getUserId());
 		
+		AppUser currAppUser = findUsers.get(0);
 		
+		String plantType = wateringRequest.getPlantType();
+		
+		List<PlantModel> plantList = currAppUser.getPlantList();
+		for (int i = 0; i < plantList.size(); i++) {
+			PlantModel currPlant = plantList.get(i);
+			String currPlantNameString=currPlant.getPlantName().toLowerCase();
+			String pType = plantType.toLowerCase();
+			System.out.println("DATAAAAAA");
+			System.out.println(currPlantNameString);
+			System.out.println(pType);
+			System.out.println(currPlantNameString.equals(pType));
+			if (currPlantNameString.equals(pType)) {
+				System.out.println("water button was PRESSED");
+				currPlant.setDaysSinceWatering((int)0);
+				System.out.println("CURRPLANT DAYS " + currPlant.getDaysSinceWatering());
+
+				
+			}
+		}
+		
+		currAppUser.listToJSONString(plantList);
+//		System.out.println(currAppUser.);
+		
+		userRepository.save(currAppUser);
+		
+		return "Successfully updated user";
 		
 	}
 	

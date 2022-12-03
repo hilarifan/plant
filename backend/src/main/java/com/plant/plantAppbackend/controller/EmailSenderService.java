@@ -52,8 +52,10 @@ public class EmailSenderService {
 	public void sendEmail(AppUser user) {
 		
 		List<PlantModel> plantList = user.needsWatering();
+		System.out.println("these plants need watering : "+ plantList);
 	
 		if (plantList.size() == 0) {
+			System.out.println(" YEEHAW ");
 			return;
 		}
 		String plantsToWater = "";
