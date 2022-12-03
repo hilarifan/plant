@@ -58,7 +58,7 @@ export default function Form() {
             if (obj.error == "true") {
                 setError(true);
                 setErrorMessage(obj.errorMsg);
-                console.log(obj.errorMsg)
+                //console.log(obj.errorMsg);
             }
             else {
                 setError(false);
