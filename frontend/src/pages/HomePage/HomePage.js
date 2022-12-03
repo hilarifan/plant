@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import sad from '../assets/sad.png'*/
 import './HomePage.css'
 import board from '../../assets/board.png'
-import {useEffect, useLocation} from 'react';
-import { useParams } from 'react-router-dom';
+import {useEffect} from 'react';
+import { useParams,useLocation } from 'react-router-dom';
 import axios from "axios";
 import Water from '../../components/Water/Water'
 import Navbar from '../../components/Navbar/Navbar'
@@ -18,13 +18,15 @@ const HomePage = () => {
     const [img, setImg] = useState(false);
     //const {id} = useParams();
 
-    // const {state} = useLocation();
-    // var id = state.id;
-    //console.log(id)
+    const {state} = useLocation();
+    var id = state.id;
+    console.log(id)
 
-    const [userID, setUserID] = useState('');
+    //const [userID, setUserID] = useState('');
 
-    const [potStates, setPotStates] = useState([
+    const [potStates, setPotStates] = useState([]);
+
+    /*{const [potStates, setPotStates] = useState([
         {
             Name: "philodendron",
             Quantity: 5
@@ -41,7 +43,7 @@ const HomePage = () => {
             Name: "green onion",
             Quantity: 4
         },
-    ])
+    ])}*/
 
     // array of objects
     // const getPlants = () => {
@@ -53,24 +55,30 @@ const HomePage = () => {
     //     })
     // }
 
-    // const getPlants = async(e) => {   
-    //     e.preventDefault();  
-    //     const response =  await fetch("http://localhost:8080/getPlants/${id}", {
+    var plantList = [];
+    const getPlants = async() => {   
+        const response =  await fetch("http://localhost:8080/getPlants/" + id, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json'},
+        })
+        const data = await response.json();
+        console.log("this is data" , data);
+        // plantList = data;
+        // console.log("list" , plantList);
+        setPotStates(data);
+
+        //  plantList = JSON.parse(data);
+        
+    }
+
+    // const getPlants = async() => {     
+    //     const response =  fetch("http://localhost:8080/getPlants/${id}", {
     //         method: 'GET',
     //         headers: { 'Content-Type': 'application/json'},
     //     })
     //     const data = await response.json();
     //     setPotStates(data);
     // }
-
-    const getPlants = async() => {     
-        const response =  fetch("http://localhost:8080/getPlants/${id}", {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json'},
-        })
-        const data = await response.json();
-        setPotStates(data);
-    }
 
 
     // '[
@@ -79,9 +87,9 @@ const HomePage = () => {
     //     {"Name":"Fern","Quantity":"0"},
     //     {"Name":"GreenOnion","Quantity":"0"}
     // ]'
-    /*{useEffect(() => { //react hook that runs whenever a component loads
+    useEffect(() => { //react hook that runs whenever a component loads
         getPlants();
-    },[]);}*/
+    }, []);
 
 
     const [potChange, setPotChange] = useState(false)
@@ -93,6 +101,8 @@ const HomePage = () => {
     const plus = require('../../assets/plus.png');
     const plusclick = require('../../assets/plus-hover.png');
     const redminus = require('../../assets/redminus.png');
+    const watered = require('../../assets/waterPress.png');
+
 
     /*{useEffect(() => {
         fetch("/api/pots").then(res => res.json()).then(res=> {
@@ -101,6 +111,23 @@ const HomePage = () => {
     },[])}*/
     const images = {sadface,happyface};
 
+    const [canWater, setWater] = useState(true);
+
+    const getResponse = async() => {
+        const response = await fetch("", {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json'},
+        })
+
+        const data = response.json();
+        console.log(data);
+
+        const obj = JSON.parse(data);
+
+        if(obj.canWater == false) {
+            setWater(true);
+        }
+    }
 
     const imgChangeHandler = (e) => {
         console.log(e.target.src)
@@ -108,11 +135,15 @@ const HomePage = () => {
             // setImg(true);
             // e.target.parentElement.closest(".happy-sad").src = sadface
             e.target.parentElement.previousElementSibling.src = sadface
+            e.target.src = water
         // }else{
             // setImg(false)
             // e.target.src = happyface
 
         // }
+        if(canWater) {
+            setImg(true);
+        }
     };
 
     const [minusB, setMinusB] = useState(false);
@@ -137,7 +168,6 @@ const HomePage = () => {
 
    
 
-    const [addSubmitted, setAddSubmitted] = useState(false);
 
     const notifyHome= () => {
         //setAddSubmitted(addData);
@@ -145,24 +175,25 @@ const HomePage = () => {
         console.log("notified");
         setPlusB(false);
         getPlants();
+
     }
-    
-    /*{const minusHandler = async(pot) => {
+
+    const minusHandler = async(pot) => {
         //e.preventDefault();
-        setUserID(id);
+        // setUserID(id);
         const minusPlant = {
             //plantType : potStates[minusI].Name,
-            plantType: pot.Name
-            userID : userID
+            plantType: pot.plantType,
+            userId : id
           }
         const response = await fetch("http://localhost:8080/minusPlant", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(minusPlant),
         })
-        console.log(await response.json());
         getPlants();
-    }}*/
+        console.log(await response.json());
+    }
 
     return (
         <>
@@ -180,16 +211,16 @@ const HomePage = () => {
             {potStates.map((pot,key)=> {
                return <div className='pot-item' key={key}>
                     <div className='redminus-img'
-                    //  onClick={(e) => minusHandler(pot)}
+                        onClick={(e) => minusHandler(pot)}
                      >
                         <img src={!minusB ? '' : redminus}/>
                     </div>
                     <img className='happy-sad' src={happyface } alt='sadface' />
                     <div className='water-img'>
-                        <Water/>
+                        <img src={pot.water ? watered : water}  onClick={imgChangeHandler}/>
                     </div>
-                    <p>{pot.Name}</p>
-                    <span>{pot.Quantity}</span>
+                    <p>{pot.plantType}</p>
+                    <span>{pot.quantity}</span>
                 </div>
             })}
 
@@ -200,4 +231,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage 
+export default HomePage
