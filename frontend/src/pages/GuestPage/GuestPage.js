@@ -21,7 +21,6 @@ const GuestPage = () => {
     //console.log(id)
 
     const sadface = require('../../assets/happy-plant.png');
-    const nextButton = require('../../assets/next.png');
 
     const [potStates, setPotStates] = useState([]);
 
@@ -34,13 +33,6 @@ const GuestPage = () => {
         console.log("this is data" , data);
         setPotStates(data);
     }
-
-     const nextHandler = () => {
-        setID(id+1);
-        console.log(id);
-        getPlants();
-    }
-    
     useEffect(() => { //react hook that runs whenever a component loads
         getPlants();
     }, []);
@@ -48,13 +40,8 @@ const GuestPage = () => {
     return (
         <>
         <GuestNavbar/>
-        <div className='board'>
+        <div className='board1'>
             <img src={board} alt="board"/>
-        </div>
-
-        <div className='next'>
-        <img src={nextButton} alt="next" onClick = {nextHandler}/>
-
         </div>
 
         <div className='yellow-page'>
