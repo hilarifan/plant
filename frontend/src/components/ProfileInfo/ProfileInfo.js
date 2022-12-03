@@ -1,27 +1,24 @@
 import { useState, useEffect } from 'react';
+import '../SignupForm/SignupForm.css';
 import './ProfileInfo.css';
 import validator from 'validator';
-import axios from "axios";
-import logout from '../../images/logout.png'
-import x from '../../images/x.png'
-import person from '../../images/person.png'
+import x from '../../images/x.png';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+ 
 export default function Form() {
-    
-    // States for registration info
+
+    // States for registration
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [close, setClose] = useState(false);
 
     useEffect(() => {
         getData();
-    },[])
+    }, []);
 
-    // State for checking the buttons
-    const [close, setClose] = useState(false);
     const navigate = useNavigate();
 
     const {state} = useLocation();
@@ -32,22 +29,19 @@ export default function Form() {
     }
 
     const handleClose = () => {
-        navigate("/home");
+        navigate("/home", {state: {id: id}});
     }
 
-    // get all user id info
-    const getData = async(e) => {
-        e.preventDefault();
-        
-        const response = await fetch("http://localhost:8080/getData/${id}", {
+    const getData = async() => {
+        //e.preventDefault();
+        const response = await fetch("http://localhost:8080/profile/" + id, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json'},
         })
 
-        const data = await response.json();
-        console.log(data);
+        const obj = await response.json();
 
-        const obj = JSON.parse(data);
+        console.log(obj);
 
         setUsername(obj.username);
         setPassword(obj.password);
@@ -55,58 +49,44 @@ export default function Form() {
         setLastName(obj.lastName);
         setEmail(obj.email);
     }
-    
+
     return (
-        <div className="overall">
-            <div className="form1">
+        <div className="form1">
+            <div className="profile-header">
                 <h1 className="form-header1">profile</h1>
-
-                <div className="x">
-                    <img src={x} onClick={handleClose} />
-                </div>
-
-                <div>
-                    <div className="input-container1">
-                        <label className="label1">username</label>
-                        <label id="inputs" className="input1" value={username} type="text" />
-                        {/* <input onChange={handleUsername} id="inputs" placeholder="username" className="input1" value={username} type="text" /> */}
-                    </div>
-
-                    <div className="input-container1">
-                        <label className="label1">password</label>
-                        <label id="inputs" className="input1" value={password} type="text" />
-                        {/* <input onChange={handlePassword} id="inputs" placeholder="password" className="input1" value={password} type="password" /> */}
-                    </div>
-                    
-                    <div className="h-input-container1">
-                        <div className="input-container22">
-                            <label className="label1">first name</label>
-                            <label id="inputs" className="input1" value={firstName} type="text" />
-                            {/* <input onChange={handleFirstName} id="inputs" placeholder="first name" className="input1" value={firstName} type="text" /> */}
-                        </div>
-
-                        <div className="input-container3">
-                            <label className="label1">last name</label>
-                            <label id="inputs" className="input1" value={lastName} type="text" />
-                            {/* <input onChange={handleLastName} id="inputs" placeholder="last name" className="input1" value={lastName} type="text" /> */}
-                        </div>
-                    </div>
-
-                    <div className="input-container1">
-                        <label className="label1">email</label>
-                        <label id="inputs" className="input1" value={email} type="text" />
-                        {/* <input onChange={handleEmail} id="inputs" placeholder="email" className="input1" value={email} type="email" /> */}
-                    </div>
-
-                    <div>
-                        <img src={logout} className="logout" onClick={handleLogout} />
-                    </div>
-                </div>
+                <img className="close-image" src={x} onClick={handleClose} />
             </div>
+            
+            <div>
+                {/* Labels and inputs for form data */}
+                <div className="input-container1">
+                    <h1 className="label1">username</h1>
+                    <h1 className="input1">{username}</h1>
+                </div>
 
-            <div className="photo">
-                <img src={person} className="person" />
-                <h1 className="header">First last</h1>
+                <div className="input-container1">
+                    <h1 className="label1">password</h1>
+                    <h1 className="input1"> {password}</h1>
+                </div>
+
+                <div className="input-container1">
+                    <h1 className="label1">email</h1>
+                    <h1 className="input1">{email}</h1>
+                </div>
+                
+                <div className="h-input-container1">
+                    <div className="input-container3">
+                        <h1 className="label2">first name</h1>
+                        <h1 className="input1">{firstName}</h1>
+                    </div>
+
+                    <div className="input-container3">
+                        <h1 className="label2">last name</h1>
+                        <h1 className="input1">{lastName}</h1>
+                    </div>
+                </div>
+
+                <button onClick={handleLogout} className="btn1" type="submit">Logout</button>
             </div>
         </div>
     );

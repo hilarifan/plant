@@ -63,7 +63,7 @@ export default function Form() {
             else {
                 setError(false);
                 setSubmitted(true);
-                navigate("/signup", {state: {id: obj.id}}); // change this to home later
+                navigate("/home", {state: {id: obj.id}}); // change this to home later
                 console.log(obj.error);
                 // if u want to use id do this:
                 // const {state} = useLocation();
@@ -104,7 +104,7 @@ export default function Form() {
                 <button onClick={handleSubmit} className="btn" type="submit">Submit</button>
             </form>
 
-            <Link to={'/profile'} className="guest-link">view as guest</Link>
+            <Link to={'/guest'} className="guest-link">view as guest</Link>
         </div>
     );
 }

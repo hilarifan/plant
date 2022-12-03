@@ -8,15 +8,16 @@ import CancelIcon from '@mui/icons-material/Cancel';
 const AddNewPlant = ({ setIsModalVisible, notifyHome }) => {
   const [closeModal, setCloseModal] = useState(false)
 
-//   const {state} = useLocation();
-//   var id = state.id;
+  const {state} = useLocation();
+  var id = state.id;
+  console.log("frontend id" , id)
 
   // data state
   const [plantValue, setPlantValue] = useState('Green onion')
   const [dayValue, setDayValue] = useState('monday')
   const [timeValue, setTimeValue] = useState('')
   const [meridiemValue, setMeridiemValue] = useState('')
-  const [userID, setUserID] = useState('');
+  // const [userID, setUserID] = useState('');
 
   //const [isSubmitted, setIsSubmitted] = useState(false);
   const handleSubmit = async(e) => {
@@ -24,18 +25,23 @@ const AddNewPlant = ({ setIsModalVisible, notifyHome }) => {
 
     notifyHome();
 
-    // setUserID(id);
+    //setUserID(id);
+
     const addPlant = {
       plantType : plantValue,
-      //userID : userID
+      userId : id
     }
-    
-    // const response = await fetch("http://localhost:8080/addPlant", {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json'},
-    //   body: JSON.stringify(addPlant),
-    // })
-    //console.log(await response.json());
+
+    //console.log("userID before addPlant" ,userId)
+    console.log("id before addPlant" , id)
+
+    console.log(addPlant);
+    const response = await fetch("http://localhost:8080/addPlant", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(addPlant),
+    })
+    console.log(await response.json());
   }
 
   return (
@@ -66,9 +72,9 @@ const AddNewPlant = ({ setIsModalVisible, notifyHome }) => {
                 setPlantValue(e.target.value)
               }}
             >
-              <option value='greeno'>Green onion</option>
-              <option value='philo'>Philodendron</option>
-              <option value='aloe'>Aloe vera</option>
+              <option value='green onion'>Green onion</option>
+              <option value='philodendron'>Philodendron</option>
+              <option value='aloe vera'>Aloe vera</option>
               <option value='fern'>Fern</option>
             </select>
           </div>
