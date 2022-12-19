@@ -11,10 +11,10 @@ p l a n t team:
 Hilari Fan, Evelyn Zhang, Grace Kuo, Anika Gupta, Kelcie Fan, Tuan Le, Andy Shen
 
 Frontend:
-Hilari Fan, Grace Kuo, Anika Gupta, Tuan Le
+Hilari Fan, Grace Kuo, Kelcie Fan
 
 Backend:
-Evelyn Zhang, Anika Gupta, Andy Shen
+Evelyn Zhang, Anika Gupta
 
 UI Design:
 Hilari Fan, Grace Kuo
